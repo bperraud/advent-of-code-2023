@@ -1,6 +1,7 @@
 #include <string>       // std::string
 #include <iostream>     // std::cout
 #include <sstream>      // std::stringstream
+#include <algorithm>
 
 class Solution {
 private :
@@ -12,11 +13,29 @@ public :
 		std::string line;
 		std::stringstream stream(input);
 
+		int sum = 0;
+
 		while (std::getline(stream, line)) {
 
-			std::cout << line << std::endl;
+			std::string number;
+
+			std::for_each(line.cbegin(), line.cend(), [&](char c) {
+				if (std::isdigit(c)) {
+					if (number.size() == 0 || number.size() == 1) {
+						number.push_back(c);
+					}
+					else if (number.size() == 2)
+						number[1] = c;
+				} }
+			);
+
+			if (number.size() == 1)
+				number.push_back(number[0]);
+
+			sum += std::stoi(number);
+
 		}
-		return 0;
+		return sum;
 	}
 };
 
