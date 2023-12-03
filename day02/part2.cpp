@@ -9,18 +9,17 @@ private :
 public :
 
 	int solution(const std::string &input) {
-
-		std::map<char, int> color_cubes = {
-			{ 'r', 12},
-			{ 'g', 13},
-			{ 'b', 14}
-		};
-
 		std::string line;
 		std::stringstream stream(input);
 		int game = 1;
 		int sum_invalid_game = 0;
+		int res = 0;
 		while (std::getline(stream, line)) {
+			std::map<char, int> color_cubes = {
+				{ 'r', 1},
+				{ 'g', 1},
+				{ 'b', 1}
+			};
 			for (size_t i = std::string("Game :").size() + std::to_string(game).size(); i < line.size(); i++)
 			{
 				if (std::isdigit(line[i])) {
@@ -28,15 +27,16 @@ public :
 					while (std::isdigit(line[i]))
 						number_str.push_back(line[i++]);
 					i++;
-					if (stoi(number_str) > color_cubes[line[i]]) {
-						sum_invalid_game += game;
-						break;
-					}
+					color_cubes[line[i]] = std::max(color_cubes[line[i]], stoi(number_str));
 				}
 			}
+			int power = 1;
+			for (auto &[key, value] :  color_cubes)
+				power*= value;
+			res += power;
 			game++;
 		}
-		return ((game-1)*(game)) / 2 - sum_invalid_game;
+		return res;
 	}
 };
 
