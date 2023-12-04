@@ -12,7 +12,6 @@ public :
 		std::string line;
 		std::stringstream stream(input);
 		int game = 1;
-		int sum_invalid_game = 0;
 		int res = 0;
 		while (std::getline(stream, line)) {
 			std::map<char, int> color_cubes = {
