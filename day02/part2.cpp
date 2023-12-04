@@ -30,10 +30,7 @@ public :
 					color_cubes[line[i]] = std::max(color_cubes[line[i]], stoi(number_str));
 				}
 			}
-			int power = 1;
-			for (auto &[key, value] :  color_cubes)
-				power*= value;
-			res += power;
+			res += color_cubes['r']*color_cubes['g']*color_cubes['b'];
 			game++;
 		}
 		return res;
