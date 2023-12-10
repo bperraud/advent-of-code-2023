@@ -6,9 +6,7 @@ for line in data:
     step = [[int(elem) for elem in line.split()]]
     while (step[-1].count(0) != len(step[-1])) :
         step.append([step[-1][i] - step[-1][i - 1] for i in range(1, len(step[-1]))])
-    t = 0
-    for liste in reversed(step) :
-        t = liste[0] - t
-    res += t
+
+    res += sum(liste[-1] for liste in step)
 
 print(res)
