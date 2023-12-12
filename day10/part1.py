@@ -34,7 +34,6 @@ for line in data :
 	if 'S' in line :
 		start = [len(my_map) - 1, line.index('S')]
 
-location = []
 start_list = []
 next_move_list = []
 
