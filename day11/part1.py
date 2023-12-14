@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 with open('input.txt', encoding = 'utf-8') as f:
 	data = [x.strip('\n') for x in f.readlines()]
 
@@ -11,13 +13,19 @@ map_galaxy = []
 list_galaxy = []
 for line in data :
     l = []
+    empty_line = True
     for i, char in enumerate(line) :
         l.append(char)
-        if char == '#' : list_galaxy.append([len(map_galaxy), i])
-    map_galaxy.append(l)
+        if char == '#' :
+            list_galaxy.append([len(map_galaxy), i])
+            empty_line = False
+    for i in range(empty_line + 1) : map_galaxy.append(l)
 
-for line in map_galaxy:
-    print(line)
+list_galaxy_copy = deepcopy(list_galaxy)
+for i in range(len(map_galaxy[0])):
+    if all(map_galaxy[j][i] == '.' for j in range(len(map_galaxy))) :
+        for t in range(len(list_galaxy_copy)) :
+            if list_galaxy_copy[t][1] > i :
+                list_galaxy[t][1] += 1
 
-print(list_galaxy)
 print(total_distance(list_galaxy))
