@@ -12,14 +12,12 @@ def total_distance(list_galaxy) :
 map_galaxy = []
 list_galaxy = []
 for line in data :
-    l = []
     empty_line = True
     for i, char in enumerate(line) :
-        l.append(char)
         if char == '#' :
             list_galaxy.append([len(map_galaxy), i])
             empty_line = False
-    for i in range(empty_line + 1) : map_galaxy.append(l)
+    for i in range(empty_line + 1) : map_galaxy.append(line)
 
 list_galaxy_copy = deepcopy(list_galaxy)
 for i in range(len(map_galaxy[0])):
