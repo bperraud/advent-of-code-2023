@@ -4,12 +4,6 @@ from copy import deepcopy
 with open('input.txt', encoding = 'utf-8') as f:
 	data = [x.strip('\n') for x in f.readlines()]
 
-
-def total_arrangement(springs, group) :
-    total = 0
-    print(springs, group)
-    return total
-
 def match(original_spring, actual_spring):
     if len(original_spring) != len(actual_spring):
         return False
@@ -24,16 +18,9 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
 
     if index_group == len(group_spring):
         copy_spring = deepcopy(actual_spring)
-        while len(copy_spring) < len(original_spring):
-            copy_spring.append('.')
+        copy_spring.extend(['.'] * (len(original_spring) - len(actual_spring)))
         if match(original_spring, copy_spring) :
-            #print("copy_spring : ", copy_spring)
             return total_arrangement + 1
-
-
-    #if (match(original_spring, actual_spring)) :
-    #    print("actual_spring : ", actual_spring)
-    #    return total_arrangement + 1
 
     if index_group == len(group_spring):
         return total_arrangement
@@ -42,8 +29,16 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
         if index_group != 0 :
             place += 1
         actual_spring.extend(['.'] * place)
+
+        #if original_spring[len(actual_spring):len(actual_spring) + group_spring[index_group]].count(".") > 0 :
+        #    continue
+
+        if len(actual_spring) + group_spring[index_group] > (len(original_spring) + 1):
+            for i in range(place) :
+                actual_spring.pop()
+            continue
+
         actual_spring.extend(['#'] * group_spring[index_group])
-        #if index_group == len(group_spring) - 1:
         res = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
         if res :
             total_arrangement = res
