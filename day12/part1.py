@@ -1,7 +1,8 @@
 
+from copy import deepcopy
+
 with open('input.txt', encoding = 'utf-8') as f:
 	data = [x.strip('\n') for x in f.readlines()]
-
 
 
 def total_arrangement(springs, group) :
@@ -9,11 +10,55 @@ def total_arrangement(springs, group) :
     print(springs, group)
     return total
 
+def match(original_spring, actual_spring):
+    if len(original_spring) != len(actual_spring):
+        return False
+    for o_elem, a_elem in zip(original_spring, actual_spring):
+        if o_elem == '#' and a_elem != '#':
+            return False
+        if o_elem == '.' and a_elem == '#':
+            return False
+    return True
+
+def backtracking(original_spring, actual_spring, group_spring, index_group, total_arrangement) :
+
+    if index_group == len(group_spring):
+        copy_spring = deepcopy(actual_spring)
+        while len(copy_spring) < len(original_spring):
+            copy_spring.append('.')
+        if match(original_spring, copy_spring) :
+            #print("copy_spring : ", copy_spring)
+            return total_arrangement + 1
+
+
+    #if (match(original_spring, actual_spring)) :
+    #    print("actual_spring : ", actual_spring)
+    #    return total_arrangement + 1
+
+    if index_group == len(group_spring):
+        return total_arrangement
+
+    for place in range(len(original_spring) - group_spring[index_group]) :
+        if index_group != 0 :
+            place += 1
+        actual_spring.extend(['.'] * place)
+        actual_spring.extend(['#'] * group_spring[index_group])
+        #if index_group == len(group_spring) - 1:
+        res = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
+        if res :
+            total_arrangement = res
+        for i in range(group_spring[index_group] + place) :
+            actual_spring.pop()
+
+    return total_arrangement
+
 
 total = 0
 for line in data:
-
     springs, group = line.split()
-    group = group.split(',')
-    total += total_arrangement(springs, group)
+    springs = list(springs)
+    group = [int(item) for item in group.split(',')]
+    total += backtracking(springs, [], group, 0, 0)
+    print(backtracking(springs, [], group, 0, 0))
 
+print(total)
