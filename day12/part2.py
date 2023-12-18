@@ -14,7 +14,6 @@ def match(original_spring, actual_spring):
             return False
     return True
 
-
 def partial_match(original_spring, actual_spring):
     original_spring = original_spring[:len(actual_spring)]
     for o_elem, a_elem in zip(original_spring, actual_spring):
@@ -38,10 +37,14 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
     if index_group == len(group_spring):
         return total_arrangement
 
-    for place in range(len(original_spring) - group_spring[index_group]) :
+    try:
+        index = original_spring[len(actual_spring):].index('#') + 1
+    except ValueError:
+        index = len(original_spring) - group_spring[index_group]
+
+    for place in range(index) :
         if index_group != 0 :
             place += 1
-
         if original_spring[len(actual_spring) + place:len(actual_spring) + group_spring[index_group]].count(".") > 0 :
             continue
         if len(actual_spring) + group_spring[index_group] + place > (len(original_spring) + 1):
