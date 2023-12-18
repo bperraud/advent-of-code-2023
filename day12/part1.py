@@ -39,21 +39,18 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
             continue
 
         actual_spring.extend(['#'] * group_spring[index_group])
-        res = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
-        if res :
-            total_arrangement = res
+        total_arrangement = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
         for i in range(group_spring[index_group] + place) :
             actual_spring.pop()
 
     return total_arrangement
-
 
 total = 0
 for line in data:
     springs, group = line.split()
     springs = list(springs)
     group = [int(item) for item in group.split(',')]
-    total += backtracking(springs, [], group, 0, 0)
+    total = backtracking(springs, [], group, 0, total)
     print(backtracking(springs, [], group, 0, 0))
 
 print(total)
