@@ -11,5 +11,5 @@ for line in data[1:]:
 			if seeds[i] < start + step and seeds[i] >= start and not changed_seed[i]:
 				seeds[i] += dest - start
 				changed_seed[i] = True
-
+	print(min(seeds))
 print(min(seeds))

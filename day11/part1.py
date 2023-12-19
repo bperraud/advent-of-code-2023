@@ -17,11 +17,11 @@ for line in data :
         if char == '#' :
             list_galaxy.append([len(map_galaxy), i])
             empty_line = False
-    for i in range(empty_line + 1) : map_galaxy.append(line)
+    map_galaxy.extend([line for _ in range(empty_line + 1)])
 
 list_galaxy_copy = deepcopy(list_galaxy)
 for i in range(len(map_galaxy[0])):
-    if all(map_galaxy[j][i] == '.' for j in range(len(map_galaxy))) :
+    if all(row[i] == '.' for row in map_galaxy) :
         for t in range(len(list_galaxy_copy)) :
             if list_galaxy_copy[t][1] > i : list_galaxy[t][1] += 1
 

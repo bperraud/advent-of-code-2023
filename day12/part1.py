@@ -30,17 +30,14 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
             place += 1
         actual_spring.extend(['.'] * place)
 
-        #if original_spring[len(actual_spring):len(actual_spring) + group_spring[index_group]].count(".") > 0 :
-        #    continue
-
         if len(actual_spring) + group_spring[index_group] > (len(original_spring) + 1):
-            for i in range(place) :
+            for _ in range(place) :
                 actual_spring.pop()
             continue
 
         actual_spring.extend(['#'] * group_spring[index_group])
         total_arrangement = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
-        for i in range(group_spring[index_group] + place) :
+        for _ in range(group_spring[index_group] + place) :
             actual_spring.pop()
 
     return total_arrangement

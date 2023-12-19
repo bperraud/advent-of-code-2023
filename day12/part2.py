@@ -53,7 +53,7 @@ def backtracking(original_spring, actual_spring, group_spring, index_group, tota
         actual_spring.extend(['.'] * place)
         actual_spring.extend(['#'] * group_spring[index_group])
         total_arrangement = backtracking(original_spring, actual_spring, group_spring, index_group + 1, total_arrangement)
-        for i in range(group_spring[index_group] + place) :
+        for _ in range(group_spring[index_group] + place) :
             actual_spring.pop()
 
     return total_arrangement
